@@ -1,0 +1,23 @@
+name: Node CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        meteor: [ '1.8.1', '1.9-beta.3']
+    name: Meteor ${{ matrix.meteor }} sample
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup meteor
+      uses: meteorengineer/setup-meteor@v1
+      with:
+        meteor-release: ${{ matrix.meteor }}
+    - run: |
+        meteor npm install
+        meteor npm test
+
